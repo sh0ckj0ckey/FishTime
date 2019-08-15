@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timer", "Timer.csproj", "{C9BD85FA-F2D6-4A9B-9E12-3F500C893002}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TumblerTimePicker", "TumblerTimePicker\TumblerTimePicker.csproj", "{46EFDF75-7EE4-4901-8B3F-C9A0357A1749}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9BD85FA-F2D6-4A9B-9E12-3F500C893002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9BD85FA-F2D6-4A9B-9E12-3F500C893002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9BD85FA-F2D6-4A9B-9E12-3F500C893002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9BD85FA-F2D6-4A9B-9E12-3F500C893002}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46EFDF75-7EE4-4901-8B3F-C9A0357A1749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46EFDF75-7EE4-4901-8B3F-C9A0357A1749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46EFDF75-7EE4-4901-8B3F-C9A0357A1749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46EFDF75-7EE4-4901-8B3F-C9A0357A1749}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {55B5B43A-94D2-493D-A2C6-8CB8A3B2030E}
+	EndGlobalSection
+EndGlobal

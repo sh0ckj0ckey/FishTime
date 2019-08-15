@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="TumblerTimePicker.WpfUIPickerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TumblerTimePicker"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" 
+             x:Name="thisCtrl"
+             Loaded="thisCtrl_Loaded">
+    <UserControl.Resources>
+
+        <ScaleTransform x:Key="FontStretchExpanded" ScaleX="1.2"/>
+
+        <local:TumblerDataToOffsetConverter x:Key="TumblerDataToOffsetConverter" />
+        <!--<local:OpenToBrushConverter x:Key="OpenToBrushConverter" />-->
+        <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <local:OpenOrSelectedToVisibilityConverter x:Key="OpenOrSelectedToVisibilityConverter" />
+
+        <Style x:Key="textStyle" TargetType="Label">
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="32" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+            <Setter Property="Padding" Value="0,-8,0,-8" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="LayoutTransform" Value="{StaticResource FontStretchExpanded}" />
+        </Style>
+
+        <DataTemplate x:Key="valueTemplate">
+            <Grid >
+                <Grid.Visibility>
+                    <MultiBinding Converter="{StaticResource OpenOrSelectedToVisibilityConverter}">
+                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}" Path="Tag" />
+                        <Binding Path="IsOpen" ElementName="thisCtrl" />
+                        <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="(ItemsControl.AlternationIndex)" />
+                    </MultiBinding>
+                </Grid.Visibility>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="{Binding}" Style="{StaticResource textStyle}"/>
+                <Label Grid.Column="1" Content="{Binding Tag.Seperator, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
+                       Style="{StaticResource textStyle}" 
+                       Visibility="{Binding IsOpen, ElementName=thisCtrl, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TumblerTemplate">
+            <Border x:Name="tumblerBorder" Width="64" BorderThickness="0" ClipToBounds="True" >
+                <!--BorderBrush="{Binding IsOpen, ElementName=thisCtrl, Converter={StaticResource OpenToBrushConverter}}"-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="spacer" Style="{StaticResource textStyle}" Visibility="Hidden"/>
+                    <Label Grid.Row="1" Content="spacer" Style="{StaticResource textStyle}" Visibility="Hidden"/>
+                    <Label Grid.Row="2" Content="spacer" Style="{StaticResource textStyle}" Visibility="Hidden"/>
+                    <Label Grid.Row="3" Content="spacer" Style="{StaticResource textStyle}" Visibility="Hidden"/>
+                    <Label Grid.Row="4" Content="spacer" Style="{StaticResource textStyle}" Visibility="Hidden"/>
+                    <Canvas Width="{Binding ActualWidth, ElementName=valuesItemsCtrl}" >
+                        <Grid x:Name="itemsGrid" Canvas.Top="0" >
+                            <Grid.Tag>
+                                <MultiBinding Converter="{StaticResource TumblerDataToOffsetConverter}">
+                                    <Binding ElementName="itemsGrid" />
+                                    <Binding Path="SelectedValueIndex" />
+                                    <Binding />
+                                </MultiBinding>
+                            </Grid.Tag>
+                            <ItemsControl x:Name="valuesItemsCtrl" ItemsSource="{Binding Values}" ItemTemplate="{StaticResource valueTemplate}" AlternationCount="{Binding Values.Count}" Tag="{Binding}" >
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </Grid>
+                    </Canvas>
+
+                    <!-- Gradient fill for creating rounded tumbler effect on the top of the control -->
+                    <Rectangle Grid.Row="0" Grid.RowSpan="2" StrokeThickness="0" VerticalAlignment="Stretch" Visibility="{Binding IsOpen, ElementName=thisCtrl, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+                                <GradientStop Color="#FF000000" Offset="0.4"/>
+                                <GradientStop Color="#00000000" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <!-- Gradient fill for creating rounded tumbler effect on the bottom of the control -->
+                    <Rectangle Grid.Row="3" Grid.RowSpan="2"  StrokeThickness="0" VerticalAlignment="Stretch" Visibility="{Binding IsOpen, ElementName=thisCtrl, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#FF000000" Offset="0.4"/>
+                                <GradientStop Color="#00000000" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+    </UserControl.Resources>
+
+    <Grid x:Name="mainGrid" PreviewMouseDown="mainGrid_PreviewMouseDown" PreviewMouseWheel="mainGrid_PreviewMouseWheel" PreviewMouseUp="mainGrid_PreviewMouseUp" PreviewMouseMove="mainGrid_PreviewMouseMove">
+        <Border x:Name="tumblersBorder" BorderThickness="0">
+            <ItemsControl x:Name="tumblersCtrl" ItemsSource="{Binding Tumblers, ElementName=thisCtrl}" ItemTemplate="{StaticResource TumblerTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </Border>
+    </Grid>
+</UserControl>
