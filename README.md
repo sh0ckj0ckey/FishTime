@@ -1,6 +1,9 @@
 # WPF 计时器开发
-### 之前在公司做的垃圾 WPF 项目，里面有个仿 iOS 的滚轮时间选择器，需要的话可以参考；
+### 之前在公司做的垃圾 WPF 项目，里面有个仿 iOS 的滚轮时间选择器，基于别人的成果修改[(项目地址)](https://www.codeproject.com/articles/279704/ios-uipickerview-like-control-in-wpf)，需要的话可以参考；
 ### 可以精确到毫秒暂停，就是说你在这一秒中途暂停，再次继续的时候这一秒会从中途继续，而不是另算。
+
+## 放个图
+![OneDrive图床](https://storage.live.com/items/5C86D43AB83A1464!274101?authkey=ADH7Q1bZZEHcW4M)
 ---
 ### 需求分析
 - 0~60分，0、10、20、30、40、50秒的定时功能；
