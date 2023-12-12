@@ -1,5 +1,5 @@
-# Windows桌面计时器
-> 自制的一个WPF计时器，使用了[仿 iOS 的滚轮时间选择器](https://www.codeproject.com/articles/279704/ios-uipickerview-like-control-in-wpf)；
+# 废时 - Windows 简易计时器
+> 自制的一个 WPF 计时器，使用了[仿 iOS 的滚轮时间选择器](https://www.codeproject.com/articles/279704/ios-uipickerview-like-control-in-wpf)；
 > 
 > 可以精确到毫秒暂停，就是说你在这一秒中途暂停，再次继续的时候这一秒会从中途继续，而不是另算。
 
